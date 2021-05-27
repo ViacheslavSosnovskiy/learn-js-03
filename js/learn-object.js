@@ -100,7 +100,21 @@ const author = {
 };
 
 const entries = Object.entries(author);
+// const ratings = Object.values(authors);
 
-for (const entry of entries) {
-  const name = entry[0];
+// 3 уровень
+for (const [name, rating] of entries) {
+  // 2 уровень
+  // const [name, rating] = entry;
+
+  // 1 уровень
+  // const name = entry[0];
+  // const rating = entry[1];
+  console.log(name, rating);
 }
+
+// for (const key of keys) {
+// }
+
+// const ratings = Object.values(authors);
+// console.log(Math.min(...ratings));
