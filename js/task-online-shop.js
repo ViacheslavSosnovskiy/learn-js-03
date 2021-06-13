@@ -4,30 +4,71 @@ const cart = {
     return this.items;
   },
   add(product) {
-    this.items.push(product);
+    for (const item of this.items) {
+      console.log(item);
+
+      if (item.name === product.name) {
+        item.quantity += 1;
+        // console.log("Такой продукт уже есть:", product.name);
+        return;
+      }
+    }
+
+    const newProduct = {
+      ...product,
+      quantity: 1,
+    };
+
+    this.items.push(newProduct);
   },
   remove(productName) {
-    const item = this.items[i];
-    for (let i = 0; i < this.items.length; i += 1) {
-      console.log(this.items[i]);
+    const { items } = this;
+    for (let i = 0; i < items.length; i += 1) {
+      const item = items[i];
 
-      if (productName === this.items[i].name) {
-        console.log("нашли такой продукт", productName);
+      if (productName === item.name) {
+        console.log("Нашли такой продукт:", productName);
+        console.log("индекс:", i);
+
+        items.splice(i, 1);
       }
     }
   },
-  clear() {},
-  countTotalPrice() {},
+  clear() {
+    this.items = [];
+  },
+  countTotalPrice() {
+    const { items } = this;
+
+    let total = 0;
+
+    for (const { price, quantity } of items) {
+      total += price * quantity;
+    }
+    return total;
+  },
 };
 
-console.log(cart.getItems());
-
 cart.add({ name: "🍎", price: 50 });
+cart.add({ name: "🍇", price: 60 });
 cart.add({ name: "🍇", price: 60 });
 cart.add({ name: "🍋", price: 60 });
 cart.add({ name: "🍋", price: 60 });
 cart.add({ name: "🍓", price: 110 });
+cart.add({ name: "🍓", price: 110 });
+cart.add({ name: "🍓", price: 110 });
+cart.add({ name: "🍓", price: 110 });
 
 console.table(cart.getItems());
 
-cart.remove("🍎");
+console.log("Total:", cart.countTotalPrice()); // общая сумма
+
+cart.remove("🍋"); // удаление продукта с корзины
+console.table(cart.getItems());
+
+console.log("Total:", cart.countTotalPrice()); // общая сумма
+
+cart.clear(); // очистка корзины
+console.log(cart.getItems());
+
+console.log("Total:", cart.countTotalPrice()); // общая сумма
